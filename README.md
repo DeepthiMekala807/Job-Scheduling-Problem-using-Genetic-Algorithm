@@ -1,24 +1,22 @@
 # Job-Scheduling-Problem-using-Genetic-Algorithm
 import random
+
 NUM_JOBS = 4
 NUM_MACHINES = 2
 POPULATION_SIZE = 10
 GENERATIONS = 5
 CROSSOVER_RATE = 0.8
 MUTATION_RATE = 0.1
-PROCESSING_TIMES = [2, 3, 1, 4] 
-
+PROCESSING_TIMES = [2, 3, 1, 4]
 
 def create_chromosome():
     return [random.randint(0, NUM_MACHINES - 1) for _ in range(NUM_JOBS)]
-
 
 def calculate_fitness(chromosome):
     machine_times = [0] * NUM_MACHINES
     for job, machine in enumerate(chromosome):
         machine_times[machine] += PROCESSING_TIMES[job]
     return 1 / max(machine_times)
-
 
 def crossover(parent1, parent2):
     if random.random() < CROSSOVER_RATE:
@@ -28,10 +26,8 @@ def crossover(parent1, parent2):
         return child1, child2
     return parent1, parent2
 
-
 def mutate(chromosome):
     return [random.randint(0, NUM_MACHINES - 1) if random.random() < MUTATION_RATE else gene for gene in chromosome]
-
 
 def genetic_algorithm():
     population = [create_chromosome() for _ in range(POPULATION_SIZE)]
