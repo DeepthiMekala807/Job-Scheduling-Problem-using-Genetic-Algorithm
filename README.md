@@ -12,11 +12,14 @@ PROCESSING_TIMES = [2, 3, 1, 4]
 def create_chromosome():
     return [random.randint(0, NUM_MACHINES - 1) for _ in range(NUM_JOBS)]
 
+
 def calculate_fitness(chromosome):
     machine_times = [0] * NUM_MACHINES
     for job, machine in enumerate(chromosome):
         machine_times[machine] += PROCESSING_TIMES[job]
     return 1 / max(machine_times)
+
+
 def crossover(parent1, parent2):
     if random.random() < CROSSOVER_RATE:
         point1, point2 = sorted(random.sample(range(NUM_JOBS), 2))
@@ -25,8 +28,10 @@ def crossover(parent1, parent2):
         return child1, child2
     return parent1, parent2
 
+
 def mutate(chromosome):
     return [random.randint(0, NUM_MACHINES - 1) if random.random() < MUTATION_RATE else gene for gene in chromosome]
+
 
 def genetic_algorithm():
     population = [create_chromosome() for _ in range(POPULATION_SIZE)]
@@ -50,7 +55,7 @@ def genetic_algorithm():
 
         print(f"Generation {generation + 1}: Best Fitness = {best_fitness}")
 
-   return best_chromosome, best_fitness
+    return best_chromosome, best_fitness
 
 best_schedule, best_fitness = genetic_algorithm()
 print("\nBest Schedule:", best_schedule)
